@@ -1,21 +1,26 @@
 @wip
+
 Feature: Positive and Negative Testing for Sign-In Functionality
 
   Background:
-    Given User on the homepage.
+    Given User goes to the "https://automationexercise.com/" address on the browser.
     And User clicks the "Signup / Login" button in the header.
+
 
   Scenario: Positive Sign In Test
     And User enters the valid email into the email input field.
     And User enters the valid password into the password input field.
-    And User clicks on the "Login" button.
+    And User clicks on the login button.
     Then User verifies that they are successfully logged in.
+    And User clicks the logout button in the header for logout.
+    And User closes the browser.
 
   Scenario Outline: Negative Sign In Test
     And User enters the "<email>" into the email input field.
     And User enters the "<password>" into the password input field.
     And User clicks on the login button.
-    Then User verifies that the login process is failed.
+    Then User verifies that the warning message is displayed.
+    And User closes the browser.
 
     Examples:
       | email               | password |

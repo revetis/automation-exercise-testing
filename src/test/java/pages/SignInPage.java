@@ -11,14 +11,23 @@ public class SignInPage {
         PageFactory.initElements(Driver.getDriver(), this);
     }
 
+    // --- SignIn Form (login page) ---
+
     @FindBy(xpath = "//input[@data-qa='login-email']")
     public WebElement loginEmailInput;
 
     @FindBy(xpath = "//input[@data-qa='login-password']")
     public WebElement loginPasswordInput;
 
-    @FindBy(xpath = "//input[@data-qa='login-button']")
+    @FindBy(xpath = "//button[@data-qa='login-button']")
     public WebElement loginButton;
+
+    @FindBy(xpath = "//form[@action='/login']")
+    public WebElement signinForm;
+
+    @FindBy(xpath = "//p[contains(text(),'Your email or password is incorrect!')]")
+    public WebElement signInWarningText;
+
 
 
 }

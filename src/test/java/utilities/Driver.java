@@ -2,9 +2,17 @@ package utilities;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.safari.SafariDriver;
+import org.openqa.selenium.safari.SafariOptions;
+
+import java.io.File;
+import java.time.Duration;
 
 public class Driver {
     public static WebDriver driver;
@@ -30,24 +38,48 @@ public class Driver {
      */
     public static WebDriver getDriver() {
         try {
+            File adblockerFile = new File("src/test/resources/adblocker.crx");
             if (driver == null) {
                 switch (ConfigReader.getProperty("browser")) {
                     case "safari":
-                        driver = new SafariDriver();
+                        SafariOptions safariOptions = new SafariOptions();
+
+                        safariOptions.setCapability("browserstack.safari.enablePopups", "false");
+
+                        driver = new SafariDriver(safariOptions);
                         break;
                     case "edge":
-                        driver = new EdgeDriver();
+                        EdgeOptions edgeOptions = new EdgeOptions();
+
+                        edgeOptions.addExtensions(adblockerFile);
+
+                        driver = new EdgeDriver(edgeOptions);
                         break;
                     case "firefox":
-                        driver = new FirefoxDriver();
+                        FirefoxOptions firefoxOptions = new FirefoxOptions();
+
+                        FirefoxProfile profile = new FirefoxProfile();
+                        profile.addExtension(adblockerFile);
+
+                        firefoxOptions.setProfile(profile);
+
+                        driver = new FirefoxDriver(firefoxOptions);
                         break;
                     default:
-                        driver = new ChromeDriver();
+                        ChromeOptions chromeOptions = new ChromeOptions();
+
+                        chromeOptions.addExtensions(adblockerFile);
+
+                        driver = new ChromeDriver(chromeOptions);
                         break;
                 }
+
+
+                driver.manage().window().maximize();
+                driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(Long.parseLong(ConfigReader.getProperty("implicitlyWaitTimeout"))));
             }
         } catch (Exception e) {
-            throw new RuntimeException("An a error occured while setup WebDriver. ERROR: " + e.getMessage());
+            throw new RuntimeException("An a error occurred while setup WebDriver. ERROR: " + e.getMessage());
         }
 
         return driver;
