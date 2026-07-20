@@ -29,5 +29,4 @@ public class SignInPage {
     public WebElement signInWarningText;
 
 
-
 }
