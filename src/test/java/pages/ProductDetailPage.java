@@ -13,7 +13,7 @@ public class ProductDetailPage {
 
     WebDriver driver = Driver.getDriver();
 
-    // --- Product Detail Page (product detail page) ---
+    // --- Product Detail Page ---
 
     @FindBy(xpath = "//div[@class='product-information']/h2")
     public WebElement productName;

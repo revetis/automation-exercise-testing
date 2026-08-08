@@ -19,7 +19,7 @@ public class SignUpPage {
 
     WebDriverWait explicitWait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(Long.parseLong(ConfigReader.getProperty("explicitWaitTimeout"))));
 
-    // --- New User Signup form (login page) ---
+    // --- New User Signup form ---
     @FindBy(xpath = "//button[@data-qa='signup-button']")
     public WebElement signupButton;
 

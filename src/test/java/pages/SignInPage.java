@@ -11,7 +11,7 @@ public class SignInPage {
         PageFactory.initElements(Driver.getDriver(), this);
     }
 
-    // --- SignIn Form (login page) ---
+    // --- SignIn Form  ---
 
     @FindBy(xpath = "//input[@data-qa='login-email']")
     public WebElement loginEmailInput;
