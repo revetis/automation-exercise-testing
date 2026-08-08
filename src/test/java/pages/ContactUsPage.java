@@ -13,7 +13,7 @@ public class ContactUsPage {
     }
     WebDriver driver = Driver.getDriver();
 
-    // --- Contact Form (Contact Us Page) ---
+    // --- Contact Form ---
 
     public WebElement getHeaderText(String text){
         return driver.findElement(By.xpath("//h2[.='"+text+"']"));

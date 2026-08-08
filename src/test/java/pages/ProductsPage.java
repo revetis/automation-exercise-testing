@@ -16,7 +16,7 @@ public class ProductsPage {
 
     WebDriver driver = Driver.getDriver();
 
-    // --- Products Page (products page) ---
+    // --- Products Page ---
 
     @FindBy(xpath = "//h2[.='All Products']")
     public WebElement allProductsTitle;
@@ -30,7 +30,7 @@ public class ProductsPage {
     }
 
     public WebElement getProductNameFromProductsList(int index) {
-        return driver.findElement(By.xpath("((//div[@class='col-sm-4'])[" + (index + 2) + "]//h2)[1]"));
+        return driver.findElement(By.xpath("((//div[@class='col-sm-4'])[" + (index + 2) + "]//p)[1]"));
     }
 
     @FindBy(xpath = "//a[@href='/product_details/1']")
@@ -42,4 +42,18 @@ public class ProductsPage {
 
     @FindBy(id = "submit_search")
     public WebElement submitSearchButton;
+
+    //    Add to cart button
+    public WebElement getProductAddToCartButtonByIndex(int index) {
+        return driver.findElement(By.xpath(
+                "((//div[@class='col-sm-4'])[" + (index + 2) + "]//div[@class='productinfo text-center']/a)"));
+    }
+
+    //    Continue shopping button
+    @FindBy(xpath = "//*[.='Continue Shopping']")
+    public WebElement continueShoppingButton;
+
+    //    View Cart Button
+    @FindBy(xpath = "(//*[.='View Cart'])[2]")
+    public WebElement viewCartButton;
 }

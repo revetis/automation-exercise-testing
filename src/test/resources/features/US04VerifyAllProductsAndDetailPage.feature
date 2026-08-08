@@ -1,4 +1,4 @@
-
+@wip
 Feature: Verify All Products And Detail Page
 
   Background: 

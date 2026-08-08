@@ -3,6 +3,7 @@ package utilities;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -80,7 +81,7 @@ public class ReusableMethods {
      *
      * @param element the WebElement to scroll into view
      */
-    private static void scrollIntoView(WebElement element) {
+    public static void scrollIntoView(WebElement element) {
         JavascriptExecutor js = (JavascriptExecutor) Driver.getDriver();
         js.executeScript("arguments[0].scrollIntoView({block: 'center'});", element);
     }
@@ -97,6 +98,23 @@ public class ReusableMethods {
     public static void clickElement(WebElement element) {
         waitOfClickable(element);
         scrollIntoView(element);
+        JavascriptExecutor js = (JavascriptExecutor) Driver.getDriver();
+        js.executeScript("arguments[0].click();", element);
+    }
+
+    /**
+     * Clicks the given element without scrolling it into view first.
+     * Use this for elements that only appear on :hover (e.g. an
+     * "Add to Cart" overlay revealed by {@link #hover(WebElement)}),
+     * since a scroll performed after the hover can move the page under
+     * a stationary mouse, causing the browser to drop the :hover state
+     * on the intended card and reveal/hide the wrong overlay before the
+     * click lands.
+     *
+     * @param element the WebElement to click
+     */
+    public static void clickElementWithoutScroll(WebElement element) {
+        waitOfClickable(element);
         JavascriptExecutor js = (JavascriptExecutor) Driver.getDriver();
         js.executeScript("arguments[0].click();", element);
     }
@@ -230,5 +248,20 @@ public class ReusableMethods {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    // ---------------- HOVER ----------------
+
+    /**
+     * Waits until the given element is visible, scrolls it into view,
+     * and performs a mouse hover action using Actions.
+     *
+     * @param element the WebElement to hover over
+     */
+    public static void hover(WebElement element) {
+        waitOfVisibility(element);
+        scrollIntoView(element);
+        Actions actions = new Actions(Driver.getDriver());
+        actions.moveToElement(element).perform();
     }
 }
